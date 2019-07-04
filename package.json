@@ -1,0 +1,24 @@
+{
+  "name": "antora-indexer-cli",
+  "version": "1.0.0",
+  "description": "A tool to generate Lunr.js indexes out of an Antora project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "VSHN AG",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/js-yaml": "^3.12.1",
+    "@types/jsdom": "^12.2.4",
+    "@types/lunr": "^2.3.2",
+    "asciidoctor": "^2.0.3",
+    "commander": "^2.20.0",
+    "js-yaml": "^3.13.1",
+    "jsdom": "^15.1.1",
+    "lunr": "^2.3.6",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.2"
+  }
+}
