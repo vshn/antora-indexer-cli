@@ -1,4 +1,4 @@
-import * as lunr from 'lunr';
+import lunr from 'lunr';
 import { ParsedFileEntry } from './parsed_file_entry';
 import { FilesMapEntry, FileList } from './files_map_entry'
 
