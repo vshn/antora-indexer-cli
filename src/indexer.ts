@@ -32,7 +32,7 @@ try {
   }
 
   // Path where the project with documentation is located
-  const antoraPath = path.join(__dirname, program.path)
+  const antoraPath = path.join(__dirname, '..', program.path)
 
   // Start parsing
   const documents: ParsedFileEntry[] = parseFiles(antoraPath)
