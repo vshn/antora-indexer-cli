@@ -8,11 +8,11 @@ This application is written with http://www.typescriptlang.org/[TypeScript] and 
 
 After cloning this repo, call the `npm install` command to install all dependencies.
 
-Then run the `gulp` command to build the `dist/indexer.js`.
+Then run the `gulp` command to build the `dist/antora-indexer.js`.
 
 The application can be run using Node:
 
-`node dist/indexer.js --help`
+`dist/antora-indexer.js --help`
 
 == Command Line Options
 
