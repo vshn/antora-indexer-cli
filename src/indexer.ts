@@ -50,7 +50,6 @@ try {
 
     default:
       throw `Invalid output option: "${program.output}" (valid options are "files" and "index")`
-      break
   }
 
   // Output to stdout
