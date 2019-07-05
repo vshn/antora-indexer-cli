@@ -1,7 +1,7 @@
-import * as yaml from 'js-yaml';
-import * as jsdom from 'jsdom';
-import * as fs from 'fs';
-import * as path from 'path';
+import yaml from 'js-yaml';
+import jsdom from 'jsdom';
+import fs from 'fs';
+import path from 'path';
 import { ParsedFileEntry } from './parsed_file_entry';
 
 const asciidoctor = require('asciidoctor')();
