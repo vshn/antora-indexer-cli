@@ -11,8 +11,7 @@ can assume several characteristics from the very beginning.
 import { ParsedFileEntry } from './lib/parsed_file_entry'
 import { FileList } from './lib/files_map_entry'
 import { parseFiles } from './lib/parser'
-import { buildLunrIndex } from './lib/builder'
-import { buildFileList } from './lib/builder'
+import { buildLunrIndex, buildFileList } from './lib/builder'
 
 import path from 'path'
 import fs from 'fs'
