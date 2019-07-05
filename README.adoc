@@ -28,6 +28,12 @@ Options:
   -h, --help           output usage information
 ----
 
+== Tests
+
+The test suite is based on https://jasmine.github.io/[Jasmine]. Run all the tests with this command:
+
+`npm test`
+
 == Docker
 
 === Building the Image

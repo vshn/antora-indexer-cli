@@ -4,7 +4,7 @@
   "description": "A tool to generate Lunr.js indexes out of an Antora project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ts-node node_modules/jasmine/bin/jasmine"
   },
   "author": "VSHN AG",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "@types/gulp": "^4.0.6",
     "@types/gulp-typescript": "^2.13.0",
     "@types/gulp-uglify": "^3.0.6",
+    "@types/jasmine": "^3.3.13",
     "@types/js-yaml": "^3.12.1",
     "@types/jsdom": "^12.2.4",
     "@types/lunr": "^2.3.2",
@@ -21,6 +22,7 @@
     "commander": "^2.20.0",
     "gulp": "^4.0.2",
     "gulp-uglify": "^3.0.2",
+    "jasmine": "^3.4.0",
     "js-yaml": "^3.13.1",
     "jsdom": "^15.1.1",
     "lunr": "^2.3.6",
