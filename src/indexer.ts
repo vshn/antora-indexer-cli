@@ -14,32 +14,34 @@ import { parseFiles } from './lib/parser'
 import { buildLunrIndex } from './lib/builder'
 import { buildFileList } from './lib/builder'
 
-import * as path from 'path'
+import path from 'path'
+import fs from 'fs'
+import program from 'commander';
 
 // Parse command line options
-const program = require('commander')
 program.version('1.0')
-  .option('-o, --output <kind>', 'valid values: "index" (default) or "files"', 'index')
-  .option('-p, --path <path>', '(mandatory) path to the Antora project to parse')
+  .option('-w, --write <kind>', 'valid values: "index" or "files"', 'index')
+  .option('-a, --antora <path>', '(mandatory) path of the Antora project to parse')
+  .option('-o, --output <path>', '(optional) write to the specified path instead of stdout')
   .parse(process.argv)
 
 // Entry point
 try {
   // Get the base path for the script
-  if (program.path === undefined) {
+  if (program.antora === undefined) {
     console.error('indexer.ts: This script requires a path as input. Exiting.')
     process.exit(1)
   }
 
   // Path where the project with documentation is located
-  const antoraPath = path.join(__dirname, '..', program.path)
+  const antoraPath = path.join(__dirname, '..', program.antora)
 
   // Start parsing
   const documents: ParsedFileEntry[] = parseFiles(antoraPath)
 
   // Build final products
   let response : FileList | lunr.Index
-  switch (program.output) {
+  switch (program.write) {
     case 'files':
         response = buildFileList(documents)
         break
@@ -49,11 +51,15 @@ try {
         break
 
     default:
-      throw `Invalid output option: "${program.output}" (valid options are "files" and "index")`
+      throw `Invalid output option: "${program.write}" (valid options are "files" and "index")`
   }
 
-  // Output to stdout
-  process.stdout.write(JSON.stringify(response))
+  if (program.output) {
+    fs.writeFileSync(program.output, JSON.stringify(response))
+  } else {
+    // Output to stdout
+    process.stdout.write(JSON.stringify(response))
+  }
 }
 catch (e) {
   console.error(`indexer.ts: Terminated with error: ${e}`)

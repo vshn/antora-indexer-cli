@@ -14,6 +14,20 @@ The application can be run using Node:
 
 `node dist/indexer.js --help`
 
+== Command Line Options
+
+[source]
+----
+Usage: indexer [options]
+
+Options:
+  -V, --version        output the version number
+  -w, --write <kind>   valid values: "index" or "files" (default: "index")
+  -a, --antora <path>  (mandatory) path of the Antora project to parse
+  -o, --output <path>  (optional) write to the specified path instead of stdout
+  -h, --help           output usage information
+----
+
 == Docker
 
 === Building the Image
@@ -24,11 +38,11 @@ Run the `docker build -t vshn/antora-indexer-cli .` command to build the image.
 
 Once pushed, the following command will output the Lunr.js index for the Antora documentation located in the `~/project/docs` folder:
 
-`docker run --rm --interactive --tty --volume ~/project/docs:/docs vshn/antora-indexer-cli --path /docs --output index`
+`docker run --rm --interactive --tty --volume ~/project/docs:/docs vshn/antora-indexer-cli --antora /docs --write index`
 
-The list of files (used to generate user-friendly search results) can be generated with the `--output files` option:
+The list of files (used to generate user-friendly search results) can be generated with the `--write files` option:
 
-`docker run --rm --interactive --tty --volume ~/project/docs:/docs vshn/antora-indexer-cli --path /docs --output files`
+`docker run --rm --interactive --tty --volume ~/project/docs:/docs vshn/antora-indexer-cli --antora /docs --write files`
 
 Users can learn more about this application using the command:
 
