@@ -1,22 +1,22 @@
-import "jasmine";
+import 'jasmine'
 import path from 'path'
 import { parseFiles } from '../src/lib/parser'
 import { ParsedFileEntry } from '../src/lib/parsed_file_entry'
 
 describe('Parser', () => {
-  it("should read the antora.yml file", () => {
+  it('should read the antora.yml file', () => {
     const startPath = path.join(__dirname, 'antora', 'docs')
     const results: ParsedFileEntry[] = parseFiles(startPath)
     expect(results).not.toBeNull()
   })
 
-  it("should return 3 items", () => {
+  it('should return 3 items', () => {
     const startPath = path.join(__dirname, 'antora', 'docs')
     const results: ParsedFileEntry[] = parseFiles(startPath)
     expect(results.length).toBe(3)
   })
 
-  it("should return meaningful items", () => {
+  it('should return meaningful items', () => {
     const startPath = path.join(__dirname, 'antora', 'docs')
     const results: ParsedFileEntry[] = parseFiles(startPath)
     const result = results[0]

@@ -1,4 +1,4 @@
-import "jasmine";
+import 'jasmine'
 import { buildFileList } from '../src/lib/builder'
 import { ParsedFileEntry } from '../src/lib/parsed_file_entry'
 import { FileList } from '../src/lib/files_map_entry'
@@ -15,8 +15,8 @@ const input : ParsedFileEntry[] = [{
   'excerpt': 'Adipisicing excepteur quis aute est sit…'
 }]
 
-describe('Index builder', () => {
-  it('should create an index', () => {
+describe('Files builder', () => {
+  it('should create a list of files', () => {
     const list : FileList = buildFileList(input)
     expect(list).not.toBeNull()
   })

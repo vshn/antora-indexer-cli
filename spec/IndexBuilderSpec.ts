@@ -1,4 +1,4 @@
-import "jasmine";
+import 'jasmine'
 import lunr from 'lunr'
 import { buildLunrIndex } from '../src/lib/builder'
 import { ParsedFileEntry } from '../src/lib/parsed_file_entry'
