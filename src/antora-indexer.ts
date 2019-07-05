@@ -19,16 +19,17 @@ import program from 'commander';
 
 // Parse command line options
 program.version('1.0')
-  .option('-w, --write <kind>', 'valid values: "index" or "files"', 'index')
   .option('-a, --antora <path>', '(mandatory) path of the Antora project to parse')
+  .option('-w, --write <kind>', 'valid values: "index" or "files"', 'index')
   .option('-o, --output <path>', '(optional) write to the specified path instead of stdout')
   .parse(process.argv)
 
 // Entry point
 try {
   // Get the base path for the script
-  if (program.antora === undefined) {
-    console.error('indexer.ts: This script requires a path as input. Exiting.')
+  if (!program.antora) {
+    console.error('This script requires the path of an Antora project as input (--antora parameter)')
+    program.outputHelp()
     process.exit(1)
   }
 
@@ -39,15 +40,15 @@ try {
   const documents: ParsedFileEntry[] = parseFiles(antoraPath)
 
   // Build final products
-  let response : FileList | lunr.Index
+  let response: FileList | lunr.Index
   switch (program.write) {
     case 'files':
-        response = buildFileList(documents)
-        break
+      response = buildFileList(documents)
+      break
 
     case 'index':
-        response = buildLunrIndex(documents)
-        break
+      response = buildLunrIndex(documents)
+      break
 
     default:
       throw `Invalid output option: "${program.write}" (valid options are "files" and "index")`
