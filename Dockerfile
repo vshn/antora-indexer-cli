@@ -21,8 +21,8 @@ COPY ["tsconfig.json", "gulpfile.ts", "./"]
 COPY src /command/src
 RUN \
     node_modules/.bin/gulp && \
-    cp /command/dist/antora-indexer.js /usr/local/bin && \
+    cp /command/dist/antora-indexer.js /usr/local/bin/antora-indexer && \
     cp -R /command/node_modules /usr/local/bin && \
     cp -R /command/dist/lib /usr/local/bin
 
-ENTRYPOINT [ "antora-indexer.js" ]
+ENTRYPOINT [ "antora-indexer" ]
