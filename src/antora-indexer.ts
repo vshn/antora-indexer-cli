@@ -15,7 +15,7 @@ import { buildLunrIndex, buildFileList } from './lib/builder'
 
 import path from 'path'
 import fs from 'fs'
-import program from 'commander';
+import program from 'commander'
 
 // Parse command line options
 program.version('1.0')

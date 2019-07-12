@@ -1,0 +1,6 @@
+name: nv
+title: VSHN Knowledge Base
+version: master # ---> versionless docs
+start_page: ROOT:index.adoc
+nav:
+- modules/ROOT/nav.adoc
