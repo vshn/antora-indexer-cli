@@ -4,7 +4,10 @@
   "description": "A tool to generate Lunr.js indexes out of an Antora project",
   "main": "index.js",
   "scripts": {
-    "test": "ts-node node_modules/jasmine/bin/jasmine"
+    "test": "ts-node node_modules/jasmine/bin/jasmine",
+    "clean": "rm -rf dist; rm ./*.js; rm spec/*.js",
+    "help": "ts-node src/antora-indexer.ts --help",
+    "build": "gulp"
   },
   "author": "VSHN AG",
   "license": "ISC",
