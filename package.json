@@ -16,7 +16,8 @@
     "asciidoctor": "^2.0.3",
     "js-yaml": "^3.13.1",
     "jsdom": "^15.1.1",
-    "lunr": "^2.3.6"
+    "lunr": "^2.3.6",
+    "isomorphic-git": "^0.74.0"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
@@ -31,7 +32,6 @@
     "gulp-chmod": "^3.0.0",
     "gulp-insert": "^0.5.0",
     "gulp-uglify": "^3.0.2",
-    "isomorphic-git": "^0.74.0",
     "jasmine": "^3.4.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2"
