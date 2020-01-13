@@ -1,6 +1,6 @@
 {
   "name": "antora-indexer-cli",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "description": "A tool to generate Lunr.js indexes out of an Antora project",
   "main": "index.js",
   "scripts": {
