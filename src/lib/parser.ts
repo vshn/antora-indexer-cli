@@ -7,6 +7,10 @@ import { ParsedFileEntry } from './parsed_file_entry'
 const asciidoctor = require('asciidoctor')()
 const { JSDOM } = jsdom
 
+// Configure git
+import * as git from 'isomorphic-git'
+git.plugins.set('fs', fs)
+
 /**
  * Returns the main title of the Asciidoc document passed as parameter.
  * This is usually the first paragraph, with a `=` prefix.
@@ -55,7 +59,7 @@ function extractText(asciidoc: any): string {
  * Parses Antora source AsciiDoc files in a particular location.
  * @param startPath The path to the documentation folder, where there must be an `antora.yml` file.
  */
-export function parseFiles(startPath: string): ParsedFileEntry[] {
+export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 	// Start by loading the Antora module definition file
 	// and gather some important contextual information
 	const antoraPath: string = path.resolve(path.join(startPath, 'antora.yml'))
@@ -97,6 +101,54 @@ export function parseFiles(startPath: string): ParsedFileEntry[] {
 			excerpt: excerpt,
 		}
 		lunrIndex.push(obj)
+	})
+	return lunrIndex
+}
+
+// https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
+async function asyncForEach(array: any, callback: any) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
+
+export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEntry[]> {
+	const playbookPath: string = path.resolve(path.join(startPath, 'playbook.yml'))
+
+	if (!fs.existsSync(playbookPath)) {
+		throw `The path "${playbookPath}" is invalid. Exiting.`
+	}
+
+	// Output variable
+	let lunrIndex: ParsedFileEntry[] = []
+
+	// Load YAML and read playbook information
+	const playbook: any = yaml.safeLoad(fs.readFileSync(playbookPath, 'utf8'))
+	const sources: object[] = playbook.content.sources
+
+	// For each entry in the playbook, clone the repo and index it
+	await asyncForEach(sources, async function (source: any, index: number) {
+		const url = source.url
+		const branch = source.branches
+
+		const clonesPath = path.join('.', '.repos', `d${Math.floor(Math.random()*1000001)}`)
+		fs.mkdirSync(clonesPath, { recursive: true })
+
+		// Clone the repo
+		await git.clone({
+			dir: clonesPath,
+			url: url,
+			singleBranch: true,
+			ref: branch,
+			depth: 1
+		})
+
+		// Index that particular project with the existing function
+		const antoraPath = path.join(clonesPath, source.start_path)
+		const result = parseAntoraFile(antoraPath)
+
+		// Append the results
+		lunrIndex.push(...result)
 	})
 	return lunrIndex
 }
