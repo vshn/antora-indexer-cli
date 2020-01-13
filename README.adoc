@@ -18,14 +18,15 @@ The application can be run using Node:
 
 [source]
 ----
-Usage: antora-indexer [options]
+Usage: antora-indexer.ts [options]
 
 Options:
-  -V, --version        output the version number
-  -a, --antora <path>  (mandatory) path of the Antora project to parse
-  -w, --write <kind>   valid values: "index" or "files" (default: "index")
-  -o, --output <path>  (optional) write to the specified path instead of stdout
-  -h, --help           output usage information
+  -V, --version          output the version number
+  -p, --playbook <path>  (mandatory) path of the Antora project to parse
+  -a, --antora <path>    (mandatory) path of the Antora project to parse
+  -w, --write <kind>     valid values: "index" or "files" (default: "index")
+  -o, --output <path>    (optional) write to the specified path instead of stdout
+  -h, --help             output usage information
 ----
 
 == Tests
