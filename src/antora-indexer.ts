@@ -27,55 +27,56 @@ program.version('1.0')
 
 // Entry point
 async function main() {
-  try {
-    // Get the base path for the script
-    if (!program.antora && !program.playbook) {
-      console.error('This script requires the path of an Antora project or playbook as input (--antora or --playbook parameters)')
-      program.outputHelp()
-      process.exit(1)
-    }
-
-    // Start parsing
-    let documents: ParsedFileEntry[] = []
-
-    if (program.playbook) {
-      // Path where the project with documentation is located
-      const playbookPath = path.join(program.playbook)
-      documents = await parsePlaybookFile(playbookPath)
-    }
-
-    if (program.antora) {
-      // Path where the project with documentation is located
-      const antoraPath = path.join(program.antora)
-      documents = parseAntoraFile(antoraPath)
-    }
-
-    // Build final products
-    let response: FileList | lunr.Index
-    switch (program.write) {
-      case 'files':
-        response = buildFileList(documents)
-        break
-
-      case 'index':
-        response = buildLunrIndex(documents)
-        break
-
-      default:
-        throw `Invalid output option: "${program.write}" (valid options are "files" and "index")`
-    }
-
-    if (program.output) {
-      fs.writeFileSync(program.output, JSON.stringify(response))
-    } else {
-      // Output to stdout
-      process.stdout.write(JSON.stringify(response))
-    }
-  }
-  catch (e) {
-    console.error(`indexer.ts: Terminated with error: ${e}`)
+  // Get the base path for the script
+  if (!program.antora && !program.playbook) {
+    console.error('This script requires the path of an Antora project or playbook as input (--antora or --playbook parameters)')
+    program.outputHelp()
     process.exit(1)
+  }
+
+  // Start parsing
+  let documents: ParsedFileEntry[] = []
+
+  if (program.playbook) {
+    // Path where the project with documentation is located
+    const playbookPath = path.join(program.playbook)
+    documents = await parsePlaybookFile(playbookPath)
+  }
+
+  if (program.antora) {
+    // Path where the project with documentation is located
+    const antoraPath = path.join(program.antora)
+    documents = parseAntoraFile(antoraPath)
+  }
+
+  // Build final products
+  let response: FileList | lunr.Index
+  switch (program.write) {
+    case 'files':
+      response = buildFileList(documents)
+      break
+
+    case 'index':
+      response = buildLunrIndex(documents)
+      break
+
+    default:
+      throw `Invalid output option: "${program.write}" (valid options are "files" and "index")`
+  }
+
+  if (program.output) {
+    fs.writeFileSync(program.output, JSON.stringify(response))
+  } else {
+    // Output to stdout
+    process.stdout.write(JSON.stringify(response))
   }
 }
 
-main()
+try {
+  main()
+}
+catch (e) {
+  console.error(`indexer.ts: Terminated with error: ${e}`)
+  console.error(e.stack)
+  process.exit(1)
+}

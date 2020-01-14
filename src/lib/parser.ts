@@ -18,6 +18,7 @@ git.plugins.set('fs', fs)
  * @param source The string to remove comments from
  */
 function removeHtmlComments(source: string): string {
+	if (!source) return ''
 	const regexp = new RegExp(
     '<!--[\\s\\S]*?(?:-->)?'
     + '<!---+>?'  // A comment with no body
