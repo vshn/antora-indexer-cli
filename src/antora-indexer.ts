@@ -19,34 +19,31 @@ import program from 'commander'
 
 // Parse command line options
 program.version('1.0')
-  .option('-p, --playbook <path>', '(mandatory) path of the Antora project to parse')
-  .option('-a, --antora <path>', '(mandatory) path of the Antora project to parse')
+  .option('-p, --playbook <path>', '(mandatory) path to an Antora playbook.yml file')
+  .option('-a, --antora <path>', '(mandatory) path to an Antora antora.yml file')
   .option('-w, --write <kind>', 'valid values: "index" or "files"', 'index')
   .option('-o, --output <path>', '(optional) write to the specified path instead of stdout')
   .parse(process.argv)
 
 // Entry point
 async function main() {
-  // Get the base path for the script
-  if (!program.antora && !program.playbook) {
-    console.error('This script requires the path of an Antora project or playbook as input (--antora or --playbook parameters)')
-    program.outputHelp()
-    process.exit(1)
-  }
-
   // Start parsing
   let documents: ParsedFileEntry[] = []
 
   if (program.playbook) {
     // Path where the project with documentation is located
-    const playbookPath = path.join(program.playbook)
+    const playbookPath = program.playbook.replace('playbook.yml', '')
     documents = await parsePlaybookFile(playbookPath)
   }
-
-  if (program.antora) {
+  else if (program.antora) {
     // Path where the project with documentation is located
-    const antoraPath = path.join(program.antora)
+    const antoraPath = program.antora.replace('antora.yml', '')
     documents = parseAntoraFile(antoraPath)
+  }
+  else {
+    console.error('This script requires the path of an Antora antora.yml or playbook.yml as input (--antora or --playbook parameters)')
+    program.outputHelp()
+    process.exit(1)
   }
 
   // Build final products

@@ -111,7 +111,7 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 	const antoraPath: string = path.resolve(path.join(startPath, 'antora.yml'))
 
 	if (!fs.existsSync(antoraPath)) {
-		throw `The path "${antoraPath}" is invalid. Exiting.`
+		throw `The path "${antoraPath}" does not contain a file named 'antora.yml'. Exiting.`
 	}
 
 	// Load YAML and read component information
@@ -162,7 +162,7 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 	const playbookPath: string = path.resolve(path.join(startPath, 'playbook.yml'))
 
 	if (!fs.existsSync(playbookPath)) {
-		throw `The path "${playbookPath}" is invalid. Exiting.`
+		throw `The path "${playbookPath}" does not contain a file named 'playbook.yml'. Exiting.`
 	}
 
 	// Output variable
