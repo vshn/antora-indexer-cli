@@ -27,7 +27,7 @@
     "@types/lunr": "2.3.3",
     "@types/node": "12.12.34",
     "gulp": "4.0.2",
-    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-typescript": "6.0.0-alpha.1",
     "gulp-chmod": "3.0.0",
     "gulp-insert": "0.5.0",
     "gulp-uglify": "3.0.2",
