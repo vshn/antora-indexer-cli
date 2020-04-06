@@ -9,7 +9,7 @@ const { JSDOM } = jsdom
 
 // Configure git
 import * as git from 'isomorphic-git'
-git.plugins.set('fs', fs)
+import http from "isomorphic-git/http/node"
 
 /**
  * Removes HTML comments from the string passed as parameter.
@@ -182,11 +182,13 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 
 		// Clone the repo
 		await git.clone({
+			fs,
+			http,
 			dir: clonesPath,
 			url: url,
 			singleBranch: true,
 			ref: branch,
-			depth: 1
+			depth: 1,
 		})
 
 		// Index that particular project with the existing function
