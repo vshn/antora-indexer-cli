@@ -131,7 +131,9 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 	moduleNames.forEach(moduleName => {
 		// The pages of an Antora module are always inside a particular path
 		const pagesPath: string = path.resolve(path.join(startPath, 'modules', moduleName, 'pages'))
-		const files: string[] = fs.readdirSync(pagesPath)
+
+		// Only parse files that have the `*.adoc` extension
+		const files: string[] = fs.readdirSync(pagesPath).filter((value) => value.endsWith('.adoc'))
 
 		// Read the contents of each file and build the index array
 		files.forEach(function (filename: string, index: number) {
