@@ -17,7 +17,7 @@
     "js-yaml": "^3.13.1",
     "jsdom": "^15.1.1",
     "lunr": "^2.3.6",
-    "isomorphic-git": "^0.74.0"
+    "isomorphic-git": "^0.78.0"
   },
   "devDependencies": {
     "@types/commander": "2.12.2",
