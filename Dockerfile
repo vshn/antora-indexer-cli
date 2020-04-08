@@ -1,5 +1,5 @@
 # Step 1: Builder image
-FROM node:10.19.0-alpine AS builder
+FROM node:10.20.0-alpine AS builder
 
 WORKDIR /command
 COPY ["package.json", "package-lock.json", "./"]
@@ -11,7 +11,7 @@ RUN node_modules/.bin/gulp
 
 
 # Step 2: Runtime image
-FROM node:10.19.0-alpine
+FROM node:10.20.0-alpine
 
 WORKDIR /command
 COPY ["package.json", "package-lock.json", "./"]
