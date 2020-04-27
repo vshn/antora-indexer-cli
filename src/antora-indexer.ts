@@ -18,7 +18,7 @@ import fs from 'fs'
 import program from 'commander'
 
 // Parse command line options
-program.version('1.0')
+program.version('1.6')
   .option('-p, --playbook <path>', '(mandatory) path to an Antora playbook.yml file')
   .option('-a, --antora <path>', '(mandatory) path to an Antora antora.yml file')
   .option('-w, --write <kind>', 'valid values: "index" or "files"', 'index')
