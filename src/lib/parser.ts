@@ -183,22 +183,33 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 		fs.mkdirSync(clonesPath, { recursive: true })
 
 		// Clone the repo
-		await git.clone({
-			fs,
-			http,
-			dir: clonesPath,
-			url: url,
-			singleBranch: true,
-			ref: branch,
-			depth: 1,
-		})
+		if (url === '.') {
+			// If the URL is a dot, it means that the current folder contains
+			// the required items to be indexed; no need to clone, just parse
+			const initialPath = path.resolve(startPath)
+			const antoraPath = path.join(initialPath, source.start_path)
+			const result = parseAntoraFile(antoraPath)
 
-		// Index that particular project with the existing function
-		const antoraPath = path.join(clonesPath, source.start_path)
-		const result = parseAntoraFile(antoraPath)
+			// Append the results
+			lunrIndex.push(...result)
+		} else {
+			// This is a remote URL, clone and index
+			await git.clone({
+				fs,
+				http,
+				dir: clonesPath,
+				url: url,
+				singleBranch: true,
+				ref: branch,
+				depth: 1,
+			})
+			// Index that particular project with the existing function
+			const antoraPath = path.join(clonesPath, source.start_path)
+			const result = parseAntoraFile(antoraPath)
 
-		// Append the results
-		lunrIndex.push(...result)
+			// Append the results
+			lunrIndex.push(...result)
+		}
 	})
 	return lunrIndex
 }
