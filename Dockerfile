@@ -1,5 +1,5 @@
 # Step 1: Builder image
-FROM node:12.16.2-alpine3.11 AS builder
+FROM node:12.16.3-alpine3.11 AS builder
 
 RUN npm install -g pkg pkg-fetch
 ENV NODE node10

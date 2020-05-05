@@ -25,14 +25,14 @@
     "@types/js-yaml": "3.12.3",
     "@types/jsdom": "16.2.1",
     "@types/lunr": "2.3.3",
-    "@types/node": "12.12.35",
+    "@types/node": "12.12.37",
     "gulp": "4.0.2",
     "gulp-typescript": "6.0.0-alpha.1",
     "gulp-chmod": "3.0.0",
     "gulp-insert": "0.5.0",
     "gulp-uglify": "3.0.2",
     "jasmine": "3.5.0",
-    "ts-node": "8.8.2",
+    "ts-node": "8.10.1",
     "typescript": "3.8.3"
   }
 }
