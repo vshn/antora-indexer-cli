@@ -33,6 +33,6 @@
     "gulp-uglify": "3.0.2",
     "jasmine": "3.5.0",
     "ts-node": "8.10.1",
-    "typescript": "3.8.3"
+    "typescript": "3.9.7"
   }
 }
