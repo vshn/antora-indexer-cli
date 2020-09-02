@@ -22,7 +22,7 @@ RUN /usr/local/bin/pkg --targets ${NODE}-${PLATFORM}-${ARCH} dist/antora-indexer
 
 
 # Step 2: Runtime image
-FROM alpine:3.11
+FROM alpine:3.12
 RUN apk add --no-cache libstdc++
 COPY --from=builder /command/antora-indexer.bin /usr/local/bin/antora-indexer
 ENTRYPOINT [ "antora-indexer" ]
