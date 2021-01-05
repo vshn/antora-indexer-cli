@@ -102,6 +102,22 @@ function getDirectories(source: fs.PathLike): string[] {
 }
 
 /**
+ * Returns the list of Asciidoc files, including those in subfolders.
+ * @param pagesPath Path to the `/modules/$MODULE/pages` folder with documentation.
+ * @param pathToAppend The path to append to the file, relative to `pagesPath` above.
+ * @param result An array of strings filled recursively by each call to this function.
+ */
+function getAllAdocFilesRecursively(pagesPath: string, pathToAppend: string, result: string[]) {
+	const dirs = getDirectories(pagesPath)
+	dirs.forEach(dir => {
+		const subPagesPath = path.join(pagesPath, dir)
+		getAllAdocFilesRecursively(subPagesPath, path.join(pathToAppend, dir), result)
+	})
+	const currentResults = fs.readdirSync(pagesPath).filter(value => value.endsWith('.adoc')).map(value => path.join(pathToAppend, value))
+	result.push(...currentResults)
+}
+
+/**
  * Parses Antora source AsciiDoc files in a particular location.
  * @param startPath The path to the documentation folder, where there must be an `antora.yml` file.
  */
@@ -133,7 +149,8 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 		const pagesPath: string = path.resolve(path.join(startPath, 'modules', moduleName, 'pages'))
 
 		// Only parse files that have the `*.adoc` extension
-		const files: string[] = fs.readdirSync(pagesPath).filter((value) => value.endsWith('.adoc'))
+		const files: string[] = []
+		getAllAdocFilesRecursively(pagesPath, '', files)
 
 		// Read the contents of each file and build the index array
 		files.forEach(function (filename: string, index: number) {
