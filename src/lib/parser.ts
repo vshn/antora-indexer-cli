@@ -104,6 +104,8 @@ function getDirectories(source: fs.PathLike): string[] {
 /**
  * Returns the list of Asciidoc files, including those in subfolders.
  * @param pagesPath Path to the `/modules/$MODULE/pages` folder with documentation.
+ * @param pathToAppend The path to append to the file, relative to `pagesPath` above.
+ * @param result An array of strings filled recursively by each call to this function.
  */
 function getAllAdocFilesRecursively(pagesPath: string, pathToAppend: string, result: string[]) {
 	const dirs = getDirectories(pagesPath)
