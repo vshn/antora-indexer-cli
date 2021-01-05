@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "sourceMap": true,  // Uncomment this
-    "outDir": "out",    // and uncomment and set this
+    "sourceMap": true,
+    "outDir": "out",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
