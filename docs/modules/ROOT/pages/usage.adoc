@@ -4,7 +4,7 @@ To use the application, invoke it at the command line with the following options
 
 [source]
 ----
-Usage: antora-indexer.ts [options]
+Usage: antora-indexer [options]
 
 Options:
   -V, --version          output the version number
