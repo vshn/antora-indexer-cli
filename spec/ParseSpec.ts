@@ -3,7 +3,7 @@ import path from 'path'
 import { parseAntoraFile } from '../src/lib/parser'
 import { ParsedFileEntry } from '../src/lib/parsed_file_entry'
 
-describe('Parser of versioned docs', () => {
+describe('Parsing of versioned docs', () => {
   it('should read the antora.yml file', () => {
     const startPath = path.join(__dirname, 'antora', 'versioned_docs')
     const results: ParsedFileEntry[] = parseAntoraFile(startPath)
@@ -34,17 +34,17 @@ describe('Parser of versioned docs', () => {
   })
 })
 
-describe('Parser of NON versioned docs', () => {
+describe('Parsing of NON versioned docs', () => {
   it('should read the antora.yml file', () => {
     const startPath = path.join(__dirname, 'antora', 'non_versioned_docs')
     const results: ParsedFileEntry[] = parseAntoraFile(startPath)
     expect(results).not.to.be.null
   })
 
-  it('should return 3 items', () => {
+  it('should return 4 items', () => {
     const startPath = path.join(__dirname, 'antora', 'non_versioned_docs')
     const results: ParsedFileEntry[] = parseAntoraFile(startPath)
-    expect(results.length).to.equal(3)
+    expect(results.length).to.equal(4)
   })
 
   it('should return meaningful items', () => {
@@ -60,7 +60,16 @@ describe('Parser of NON versioned docs', () => {
   it('should have an href with structure: /component/page.html', () => {
     const startPath = path.join(__dirname, 'antora', 'non_versioned_docs')
     const results: ParsedFileEntry[] = parseAntoraFile(startPath)
-    const result = results[0]
+    const result = results[1]
     expect(result.href).to.equal('/nv/index.html')
+  })
+})
+
+describe('Parsing of subfolders', () => {
+  it('should parse files in subfolders', () => {
+    const startPath = path.join(__dirname, 'antora', 'non_versioned_docs')
+    const results: ParsedFileEntry[] = parseAntoraFile(startPath)
+    const result = results[0]
+    expect(result.href).to.equal('/nv/subfolder/file_in_subfolder.html')
   })
 })
