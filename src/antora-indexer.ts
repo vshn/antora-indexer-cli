@@ -13,7 +13,6 @@ import { FileList } from './lib/files_map_entry'
 import { parseAntoraFile, parsePlaybookFile } from './lib/parser'
 import { buildLunrIndex, buildFileList } from './lib/builder'
 
-import path from 'path'
 import fs from 'fs'
 import program from 'commander'
 
