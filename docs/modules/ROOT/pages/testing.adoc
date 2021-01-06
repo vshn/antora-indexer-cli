@@ -1,0 +1,51 @@
+= Testing
+
+The test suite is based on https://mochajs.org/[Mocha] and https://www.chaijs.com/[Chai].
+
+The tests are located in the `spec` folder, and are defined in TypeScript in https://en.wikipedia.org/wiki/Behavior-driven_development[BDD] style.
+
+== Command Line
+
+Run all the tests with the `npm test` command:
+
+[source]
+--
+$ npm test
+
+> antora-indexer-cli@1.8.0 test /home/akosma/Documents/Projects/images/antora-indexer-cli
+> npx ts-mocha spec/*
+
+
+
+  Files builder
+    ✓ should create a list of files
+    ✓ should have the same number of items as the input
+    ✓ should have keys with the same value as the "href" property
+
+  Index builder
+    ✓ should create an index
+
+  Parsing of versioned docs
+    ✓ should read the antora.yml file (83ms)
+    ✓ should return 3 items
+    ✓ should return meaningful items
+    ✓ should have an href with structure: /component/version/page.html
+
+  Parsing of NON versioned docs
+    ✓ should read the antora.yml file
+    ✓ should return 4 items
+    ✓ should return meaningful items
+    ✓ should have an href with structure: /component/page.html
+
+  Parsing of subfolders
+    ✓ should parse files in subfolders
+
+
+  13 passing (356ms)
+--
+
+== Visual Studio Code
+
+Mocha integrates naturally into Visual Studio Code, particularly when using the https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-mocha-test-adapter[Mocha Test Explorer] extension. Tests can therefore be run (and debugged) directly in the IDE, either all at once, or in a case-by-base basis.
+
+image::test_explorer.png[]

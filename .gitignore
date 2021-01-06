@@ -1,7 +1,6 @@
 out
 .repos
 .repo
-.vscode
 dist
 gulpfile.js
 spec/**/*.js

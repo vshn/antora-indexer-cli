@@ -1,0 +1,35 @@
+= Building
+
+This application is written with http://www.typescriptlang.org/[TypeScript] and is built with https://gulpjs.com/[Gulp].
+
+== Requirements
+
+This tool requires Node.js 12 or higher. It is recommended to use the https://github.com/nvm-sh/nvm[Node Version Manager] tool to install different versions of node as required.
+
+IMPORTANT: After cloning this repo, call the `npm install` command to install all dependencies.
+
+== How to Build
+
+Run the `npm run build` command to build the application using TypeScript. Once the build is complete, the application will be available in `out/antora-indexer.js`.
+
+The application can be run using Node:
+
+[source]
+--
+$ node out/src/antora-indexer.js --help
+--
+
+== How to Release
+
+Run the `npm run release` task, which uses Gulp (itself using TypeScript) to build, uglify, and add a https://en.wikipedia.org/wiki/Shebang_(Unix)[shebang] at the beginning of the main script.
+
+The application can now be run as follows:
+
+[source]
+--
+$ dist/antora-indexer.js --help
+--
+
+== Clean
+
+Use the `npm run clean` command to remove all build artifacts
