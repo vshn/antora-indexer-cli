@@ -1,4 +1,4 @@
-import 'jasmine'
+import { expect } from 'chai'
 import lunr from 'lunr'
 import { buildLunrIndex } from '../src/lib/builder'
 import { ParsedFileEntry } from '../src/lib/parsed_file_entry'
@@ -18,6 +18,6 @@ const input : ParsedFileEntry[] = [{
 describe('Index builder', () => {
   it('should create an index', () => {
     const index : lunr.Index = buildLunrIndex(input)
-    expect(index).not.toBeNull()
+    expect(index).not.to.be.null
   })
 })

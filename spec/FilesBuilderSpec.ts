@@ -1,4 +1,4 @@
-import 'jasmine'
+import { expect } from 'chai'
 import { buildFileList } from '../src/lib/builder'
 import { ParsedFileEntry } from '../src/lib/parsed_file_entry'
 import { FileList } from '../src/lib/files_map_entry'
@@ -18,18 +18,18 @@ const input : ParsedFileEntry[] = [{
 describe('Files builder', () => {
   it('should create a list of files', () => {
     const list : FileList = buildFileList(input)
-    expect(list).not.toBeNull()
+    expect(list).not.to.be.null
   })
 
   it('should have the same number of items as the input', () => {
     const list : FileList = buildFileList(input)
-    expect(Object.keys(list).length).toEqual(input.length)
+    expect(Object.keys(list).length).to.equal(input.length)
   })
 
   it('should have keys with the same value as the "href" property', () => {
     const list : FileList = buildFileList(input)
     for (const entry in list) {
-      expect(entry).toEqual(list[entry].href)
+      expect(entry).to.equal(list[entry].href)
     }
   })
 })
