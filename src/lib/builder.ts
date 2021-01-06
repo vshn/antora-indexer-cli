@@ -6,9 +6,9 @@ import { FilesMapEntry, FileList } from './files_map_entry'
 * Builds a list of files used to map Lunr.js results to actual file names.
 * @param documents A list of parsed file entries
 */
-export function buildFileList(documents: ParsedFileEntry[]) {
+export function buildFileList(documents: ParsedFileEntry[]): FileList {
   const fileList: FileList = {}
-  documents.forEach((doc: ParsedFileEntry, index: number) => {
+  documents.forEach((doc: ParsedFileEntry) => {
       const entry: FilesMapEntry = {
           name: doc.name,
           href: doc.href,

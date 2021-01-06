@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import { ParsedFileEntry } from './parsed_file_entry'
 
+/* eslint-disable @typescript-eslint/no-var-requires */
 const asciidoctor = require('asciidoctor')()
 const { JSDOM } = jsdom
 
@@ -131,7 +132,7 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 	}
 
 	// Load YAML and read component information
-	const antora: any = yaml.safeLoad(fs.readFileSync(antoraPath, 'utf8'))
+	const antora: any = yaml.load(fs.readFileSync(antoraPath, 'utf8'))
 	const componentName: string = antora.name
 	let version: string = antora.version
 
@@ -153,7 +154,7 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 		getAllAdocFilesRecursively(pagesPath, '', files)
 
 		// Read the contents of each file and build the index array
-		files.forEach(function (filename: string, index: number) {
+		files.forEach(function (filename: string) {
 			const filePath: string = path.join(pagesPath, filename)
 			const asciidoc: any = asciidoctor.loadFile(filePath)
 			const href: string = buildHref(componentName, moduleName, version, filename)
@@ -185,14 +186,14 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 	}
 
 	// Output variable
-	let lunrIndex: ParsedFileEntry[] = []
+	const lunrIndex: ParsedFileEntry[] = []
 
 	// Load YAML and read playbook information
-	const playbook: any = yaml.safeLoad(fs.readFileSync(playbookPath, 'utf8'))
-	const sources: object[] = playbook.content.sources
+	const playbook: any = yaml.load(fs.readFileSync(playbookPath, 'utf8'))
+	const sources: any[] = playbook.content.sources
 
 	// For each entry in the playbook, git clone the repo and index it
-	await asyncForEach(sources, async function (source: any, index: number) {
+	await asyncForEach(sources, async function (source: any) {
 		const url = source.url
 		const branch = source.branches
 
