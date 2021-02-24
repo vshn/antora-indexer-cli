@@ -24,19 +24,21 @@ program.version('1.8')
   .option('-o, --output <path>', '(optional) write to the specified path instead of stdout')
   .parse(process.argv)
 
+const options = program.opts();
+
 // Entry point
 async function main() {
   // Start parsing
   let documents: ParsedFileEntry[] = []
 
-  if (program.playbook) {
+  if (options.playbook) {
     // Path where the project with documentation is located
-    const playbookPath = program.playbook.replace('playbook.yml', '')
+    const playbookPath = options.playbook.replace('playbook.yml', '')
     documents = await parsePlaybookFile(playbookPath)
   }
-  else if (program.antora) {
+  else if (options.antora) {
     // Path where the project with documentation is located
-    const antoraPath = program.antora.replace('antora.yml', '')
+    const antoraPath = options.antora.replace('antora.yml', '')
     documents = parseAntoraFile(antoraPath)
   }
   else {
@@ -47,7 +49,7 @@ async function main() {
 
   // Build final products
   let response: FileList | lunr.Index
-  switch (program.write) {
+  switch (options.write) {
     case 'files':
       response = buildFileList(documents)
       break
@@ -57,11 +59,11 @@ async function main() {
       break
 
     default:
-      throw `Invalid output option: "${program.write}" (valid options are "files" and "index")`
+      throw `Invalid output option: "${options.write}" (valid options are "files" and "index")`
   }
 
-  if (program.output) {
-    fs.writeFileSync(program.output, JSON.stringify(response))
+  if (options.output) {
+    fs.writeFileSync(options.output, JSON.stringify(response))
   } else {
     // Output to stdout
     process.stdout.write(JSON.stringify(response))
