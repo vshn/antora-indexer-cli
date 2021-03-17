@@ -38,7 +38,7 @@
     "gulp-insert": "0.5.0",
     "gulp-typescript": "6.0.0-alpha.1",
     "gulp-uglify": "3.0.2",
-    "mocha": "8.3.1",
+    "mocha": "8.3.2",
     "rimraf": "3.0.2",
     "ts-mocha": "8.0.0",
     "ts-node": "9.1.1",
