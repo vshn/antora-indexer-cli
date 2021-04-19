@@ -19,7 +19,7 @@
     "isomorphic-git": "^1.4.0",
     "js-yaml": "^4.0.0",
     "jsdom": "^16.0.0",
-    "lunr": "^2.3.6"
+    "lunr": "^2.3.8"
   },
   "devDependencies": {
     "@types/chai": "4.2.16",
