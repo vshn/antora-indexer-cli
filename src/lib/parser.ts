@@ -21,10 +21,10 @@ import http from "isomorphic-git/http/node"
 function removeHtmlComments(source: string): string {
 	if (!source) return ''
 	const regexp = new RegExp(
-    '<!--[\\s\\S]*?(?:-->)?'
-    + '<!---+>?'  // A comment with no body
-    + '|<!(?![dD][oO][cC][tT][yY][pP][eE]|\\[CDATA\\[)[^>]*>?'
-    + '|<[?][^>]*>?',  // A pseudo-comment
+		'<!--[\\s\\S]*?(?:-->)?'
+		+ '<!---+>?'  // A comment with no body
+		+ '|<!(?![dD][oO][cC][tT][yY][pP][eE]|\\[CDATA\\[)[^>]*>?'
+		+ '|<[?][^>]*>?',  // A pseudo-comment
 		'g')
 	return source.replace(regexp, '')
 }
@@ -195,7 +195,13 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 	// For each entry in the playbook, git clone the repo and index it
 	await asyncForEach(sources, async function (source: any) {
 		const url = source.url
-		const branch = source.branches
+		let branches: string[]
+		// source.branches can contain a single string, or an array thereof
+		if (typeof source.branches === 'string') {
+			branches = [source.branches]
+		} else {
+			branches = source.branches
+		}
 
 		const clonesPath = path.join('.', '.repos', `d${Math.floor(Math.random() * 1000001)}`)
 		fs.mkdirSync(clonesPath, { recursive: true })
@@ -217,16 +223,40 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 				http,
 				dir: clonesPath,
 				url: url,
-				singleBranch: true,
-				ref: branch,
 				depth: 1,
 			})
-			// Index that particular project with the existing function
-			const antoraPath = path.join(clonesPath, source.start_path)
-			const result = parseAntoraFile(antoraPath)
 
-			// Append the results
-			lunrIndex.push(...result)
+			// If any of the branches contains a "*" wildcard, get the actual list
+			// of branches to work with, as isomorphic-git cannot deal with a wildcard
+			// (this is actually used, for example in the k8up repository)
+			let actualBranches : string[] = []
+			let remoteBranches = await git.listBranches({ fs, dir: clonesPath, remote: 'origin' })
+			branches.forEach(branch => {
+				if (branch.includes('*')) {
+					remoteBranches.forEach(remoteBranch => {
+						if (remoteBranch.match(branch)) {
+							actualBranches.push(remoteBranch)
+						}
+					})
+				} else {
+					actualBranches.push(branch)
+				}
+			})
+
+			// For each branch, checkout and index
+			await asyncForEach(actualBranches, async function (branch: string) {
+				await git.checkout({
+					fs,
+					dir: clonesPath,
+					ref: branch
+				})
+				// Index that particular project with the existing function
+				const antoraPath = path.join(clonesPath, source.start_path)
+				const result = parseAntoraFile(antoraPath)
+
+				// Append the results
+				lunrIndex.push(...result)
+			})
 		}
 	})
 	return lunrIndex
