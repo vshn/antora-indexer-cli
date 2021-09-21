@@ -195,12 +195,12 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 	// For each entry in the playbook, git clone the repo and index it
 	await asyncForEach(sources, async function (source: any) {
 		const url = source.url
-		let branches: string[]
+		let yamlBranches: string[]
 		// source.branches can contain a single string, or an array thereof
 		if (typeof source.branches === 'string') {
-			branches = [source.branches]
+			yamlBranches = [source.branches]
 		} else {
-			branches = source.branches
+			yamlBranches = source.branches
 		}
 
 		const clonesPath = path.join('.', '.repos', `d${Math.floor(Math.random() * 1000001)}`)
@@ -229,22 +229,22 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 			// If any of the branches contains a "*" wildcard, get the actual list
 			// of branches to work with, as isomorphic-git cannot deal with a wildcard
 			// (this is actually used, for example in the k8up repository)
-			let actualBranches : string[] = []
+			let branchesToIndex : string[] = []
 			let remoteBranches = await git.listBranches({ fs, dir: clonesPath, remote: 'origin' })
-			branches.forEach(branch => {
+			yamlBranches.forEach(branch => {
 				if (branch.includes('*')) {
 					remoteBranches.forEach(remoteBranch => {
 						if (remoteBranch.match(branch)) {
-							actualBranches.push(remoteBranch)
+							branchesToIndex.push(remoteBranch)
 						}
 					})
 				} else {
-					actualBranches.push(branch)
+					branchesToIndex.push(branch)
 				}
 			})
 
 			// For each branch, checkout and index
-			await asyncForEach(actualBranches, async function (branch: string) {
+			await asyncForEach(branchesToIndex, async function (branch: string) {
 				await git.checkout({
 					fs,
 					dir: clonesPath,
