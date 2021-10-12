@@ -4,7 +4,8 @@
 export interface FilesMapEntry {
   name: string,
   href: string,
-  excerpt: string
+  excerpt: string,
+  version: string
 }
 
 export type FileList = { [href: string]: FilesMapEntry }

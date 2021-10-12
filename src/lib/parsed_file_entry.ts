@@ -6,5 +6,6 @@ export interface ParsedFileEntry {
 	name: string,
 	text: string,
 	href: string,
-	excerpt: string
+	excerpt: string,
+	version: string
 }
