@@ -24,6 +24,7 @@ describe('Parsing of versioned docs', () => {
     expect(result.href).not.to.be.undefined
     expect(result.name).not.to.be.undefined
     expect(result.text).not.to.be.undefined
+    expect(result.version).to.equal('0.0.1')
   })
 
   it('should have an href with structure: /component/version/page.html', () => {
@@ -55,6 +56,7 @@ describe('Parsing of NON versioned docs', () => {
     expect(result.href).not.to.be.undefined
     expect(result.name).not.to.be.undefined
     expect(result.text).not.to.be.undefined
+    expect(result.version).to.equal('')
   })
 
   it('should have an href with structure: /component/page.html', () => {

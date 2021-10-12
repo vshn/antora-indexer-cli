@@ -21,7 +21,10 @@
         "panel.border": "#af9075",
         "sideBar.border": "#af9075",
         "editorGroup.border": "#af9075",
-        "tab.activeBorder": "#af9075"
+        "tab.activeBorder": "#af9075",
+        "sash.hoverBorder": "#af9075",
+        "statusBarItem.remoteBackground": "#997658",
+        "statusBarItem.remoteForeground": "#e7e7e7"
     },
     "peacock.color": "#997658"
 }

@@ -13,6 +13,7 @@ export function buildFileList(documents: ParsedFileEntry[]): FileList {
           name: doc.name,
           href: doc.href,
           excerpt: doc.excerpt,
+          version: doc.version
       }
       fileList[doc.href] = entry
   })
@@ -28,6 +29,7 @@ export function buildLunrIndex(documents: ParsedFileEntry[]): lunr.Index {
       this.ref('href')
       this.field('name')
       this.field('text')
+      this.field('version')
 
       documents.forEach((doc: ParsedFileEntry) => {
           this.add(doc)

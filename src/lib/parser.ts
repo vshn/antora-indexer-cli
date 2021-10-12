@@ -166,6 +166,7 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 				text: text,
 				href: href,
 				excerpt: excerpt,
+				version: version
 			}
 			lunrIndex.push(obj)
 		})
