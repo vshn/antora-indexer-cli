@@ -141,6 +141,9 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 		version = ''
 	}
 
+	// Get global attributes defined, if any
+	const attributes = antora.asciidoc?.attributes
+
 	// Get all module names
 	const moduleNames: string[] = getDirectories(path.resolve(path.join(startPath, 'modules')))
 	const lunrIndex: ParsedFileEntry[] = []
@@ -156,7 +159,7 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 		// Read the contents of each file and build the index array
 		files.forEach(function (filename: string) {
 			const filePath: string = path.join(pagesPath, filename)
-			const asciidoc: any = asciidoctor.loadFile(filePath)
+			const asciidoc: any = asciidoctor.loadFile(filePath, { 'attributes': attributes })
 			const href: string = buildHref(componentName, moduleName, version, filename)
 			const name: string = extractTitle(asciidoc)
 			const text: string = extractText(asciidoc)
