@@ -24,7 +24,7 @@ program.version('1.8')
   .option('-o, --output <path>', '(optional) write to the specified path instead of stdout')
   .parse(process.argv)
 
-const options = program.opts();
+const options = program.opts()
 
 // Entry point
 async function main() {
