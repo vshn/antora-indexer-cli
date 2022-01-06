@@ -1,7 +1,4 @@
-import chai, { expect } from 'chai'
-import chaiAsPromised from 'chai-as-promised'
-chai.use(chaiAsPromised)
-
+import { expect } from 'chai'
 import path from 'path'
 import { parseAntoraFile } from '../src/lib/parser'
 import { ParsedFileEntry } from '../src/lib/parsed_file_entry'
