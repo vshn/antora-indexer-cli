@@ -1,6 +1,7 @@
-name: versioned
+name: multi
 title: VSHN Knowledge Base
-version: 0.0.1
+version: 2.5.7
 start_page: ROOT:index.adoc
 nav:
 - modules/ROOT/nav.adoc
+- modules/another/nav.adoc

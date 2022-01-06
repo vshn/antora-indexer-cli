@@ -1,4 +1,4 @@
-name: nv
+name: non_versioned
 title: VSHN Knowledge Base
 version: master # ---> versionless docs
 start_page: ROOT:index.adoc

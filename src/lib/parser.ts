@@ -41,12 +41,15 @@ function extractTitle(asciidoc: any): string {
 
 /**
  * Builds the URL to a particular HTML file, following Antora's standards.
- * @param componentName The name of the Antora component
+ * @param componentName The name of the Antora component (not used if "ROOT")
  * @param version The version of the Antora component
  * @param filename The filename of the AsciiDoc document
  * @param moduleName The module name (not used if "ROOT")
  */
 function buildHref(componentName: string, moduleName: string, version: string, filename: string): string {
+	if (componentName === 'ROOT') {
+		return path.join('/', version, filename.replace('adoc', 'html'))
+	}
 	if (moduleName === 'ROOT') {
 		return path.join('/', componentName, version, filename.replace('adoc', 'html'))
 	}
@@ -137,7 +140,7 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 	let version: string = antora.version
 
 	// For versionless components, Antora uses the 'master' value
-	if (version == 'master') {
+	if (version == 'master' || version == undefined || version == null) {
 		version = ''
 	}
 
