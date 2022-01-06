@@ -139,8 +139,9 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 	const componentName: string = antora.name
 	let version: string = antora.version
 
-	// For versionless components, Antora uses the 'master' value
-	if (version == 'master' || version == undefined || version == null) {
+	// For versionless components, Antora uses the 'master' value (in versions 1 and 2)
+	// and '~' (in version 3). The tilde evaluates in YAML to 'null'.
+	if (version === 'master' || version === undefined || version === null) {
 		version = ''
 	}
 
