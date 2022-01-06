@@ -75,3 +75,13 @@ describe('Parsing of subfolders', () => {
     expect(result.href).to.equal('/nv/subfolder/file_in_subfolder.html')
   })
 })
+
+describe('Support for Antora attributes', () => {
+  it('should replace global attributes', () => {
+    const startPath = path.join(__dirname, 'antora', 'non_versioned_docs')
+    const results: ParsedFileEntry[] = parseAntoraFile(startPath)
+    const result = results[1]
+    expect(result.name).to.equal('SOME GLOBAL VALUE HERE VSHN Knowledge Base Home')
+    expect(result.text).to.contain('This is the entry page of SOME GLOBAL VALUE HERE the Customer Knowledge Base.')
+  })
+})
