@@ -3,9 +3,11 @@ import jsdom from 'jsdom'
 import fs from 'fs'
 import path from 'path'
 import { ParsedFileEntry } from './parsed_file_entry'
+import { Antora, AntoraSource, AntoraPlaybook } from './antora_definitions'
 
-/* eslint-disable @typescript-eslint/no-var-requires */
-const asciidoctor = require('asciidoctor')()
+import Processor, { Asciidoctor } from 'asciidoctor'
+const processor = Processor()
+
 const { JSDOM } = jsdom
 
 // Configure git
@@ -34,8 +36,8 @@ function removeHtmlComments(source: string): string {
  * This is usually the first paragraph, with a `=` prefix.
  * @param asciidoc An asciidoc document
  */
-function extractTitle(asciidoc: any): string {
-	const title = asciidoc.getDocumentTitle({ partition: false })
+function extractTitle(asciidoc: Asciidoctor.Document): string {
+	const title = asciidoc.getDocumentTitle({ partition: false }) as string
 	return removeHtmlComments(title).trim()
 }
 
@@ -73,7 +75,7 @@ function extractExcerpt(text: string): string {
  * so that only its visible text can be extracted later.
  * @param asciidoc An AsciiDoc document
  */
-function extractText(asciidoc: any): string {
+function extractText(asciidoc: Asciidoctor.Document): string {
 	const htmlString: string = asciidoc.convert()
 	const htmlDoc: jsdom.JSDOM = new JSDOM(htmlString)
 	const body: HTMLElement = htmlDoc.window.document.body
@@ -89,7 +91,7 @@ function extractText(asciidoc: any): string {
  * @param array Array of items being iterated upon
  * @param callback The function to call for each item
  */
-async function asyncForEach(array: any, callback: any) {
+async function asyncForEach<T>(array: T[], callback: (arg0: T, arg1: number, arg2: T[]) => void) {
 	for (let index = 0; index < array.length; index++) {
 		await callback(array[index], index, array)
 	}
@@ -135,7 +137,7 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 	}
 
 	// Load YAML and read component information
-	const antora: any = yaml.load(fs.readFileSync(antoraPath, 'utf8'))
+	const antora = yaml.load(fs.readFileSync(antoraPath, 'utf8')) as Antora
 	const componentName: string = antora.name
 	let version: string = antora.version
 
@@ -163,7 +165,7 @@ export function parseAntoraFile(startPath: string): ParsedFileEntry[] {
 		// Read the contents of each file and build the index array
 		files.forEach(function (filename: string) {
 			const filePath: string = path.join(pagesPath, filename)
-			const asciidoc: any = asciidoctor.loadFile(filePath, { 'attributes': attributes })
+			const asciidoc: Asciidoctor.Document = processor.loadFile(filePath, { 'attributes': attributes })
 			const href: string = buildHref(componentName, moduleName, version, filename)
 			const name: string = extractTitle(asciidoc)
 			const text: string = extractText(asciidoc)
@@ -197,11 +199,11 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 	const lunrIndex: ParsedFileEntry[] = []
 
 	// Load YAML and read playbook information
-	const playbook: any = yaml.load(fs.readFileSync(playbookPath, 'utf8'))
-	const sources: any[] = playbook.content.sources
+	const playbook = yaml.load(fs.readFileSync(playbookPath, 'utf8')) as AntoraPlaybook
+	const sources: AntoraSource[] = playbook.content.sources
 
 	// For each entry in the playbook, git clone the repo and index it
-	await asyncForEach(sources, async function (source: any) {
+	await asyncForEach(sources, async function (source: AntoraSource) {
 		const url = source.url
 		let yamlBranches: string[]
 		// source.branches can contain a single string, or an array thereof
