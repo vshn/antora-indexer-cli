@@ -1,0 +1,3 @@
+= Another Docs
+
+This is another module.
