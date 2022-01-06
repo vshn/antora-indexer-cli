@@ -8,6 +8,11 @@ content:
   sources:
   - url: .
     start_path: docs
+    branches: master
+    edit_url: 'https://github.com/k8up-io/k8up/edit/master/{path}'
+  - url: https://github.com/vshn/antora-indexer-cli.git
+    start_path: docs
+    branches: master
     edit_url: 'https://github.com/k8up-io/k8up/edit/master/{path}'
 ui:
   bundle:

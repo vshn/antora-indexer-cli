@@ -19,10 +19,10 @@ describe('Parsing of playbooks', () => {
     expect(results).not.to.be.null
   })
 
-  it('should return 4 items', async () => {
+  it('should return 9 items', async () => {
     const startPath = path.join(__dirname, 'antora', 'playbook_docs')
     const results: ParsedFileEntry[] = await parsePlaybookFile(startPath)
-    expect(results.length).to.equal(4)
+    expect(results.length).to.equal(9)
   })
 
   it('should return meaningful items', async () => {
@@ -33,13 +33,15 @@ describe('Parsing of playbooks', () => {
     expect(result.href).not.to.be.undefined
     expect(result.name).not.to.be.undefined
     expect(result.text).not.to.be.undefined
-    expect(result.version).to.equal('0.0.1')
+    expect(result.version).to.equal('1.2.3')
   })
 
   it('should have an href with structure: /component/module/version/page.html', async () => {
     const startPath = path.join(__dirname, 'antora', 'playbook_docs')
     const results: ParsedFileEntry[] = await parsePlaybookFile(startPath)
-    const result = results[3]
-    expect(result.href).to.equal('/versioned/another/0.0.1/index.html')
+    const result1 = results[3]
+    expect(result1.href).to.equal('/local_playbook/another/1.2.3/index.html')
+    const result2 = results[5]
+    expect(result2.href).to.equal('/idx/docker.html')
   })
 })

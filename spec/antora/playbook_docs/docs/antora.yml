@@ -1,6 +1,6 @@
-name: versioned
+name: local_playbook
 title: VSHN Knowledge Base
-version: 0.0.1
+version: 1.2.3
 start_page: ROOT:index.adoc
 nav:
 - modules/ROOT/nav.adoc

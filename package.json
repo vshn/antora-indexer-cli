@@ -4,9 +4,9 @@
   "description": "A tool to generate Lunr.js indexes out of an Antora project",
   "main": "index.js",
   "scripts": {
-    "coverage": "npx nyc --reporter=html ts-mocha spec/*",
-    "test": "npx ts-mocha spec/*",
-    "clean": "npx rimraf out dist coverage",
+    "coverage": "npx nyc --reporter=html ts-mocha --timeout 10000 spec/*",
+    "test": "npx ts-mocha --timeout 10000 spec/*",
+    "clean": "npx rimraf out dist coverage .repos .nyc_output",
     "help": "npx ts-node src/antora-indexer.ts --help",
     "release": "npx gulp",
     "build": "npx tsc",
