@@ -2,7 +2,6 @@ out
 .repos
 .repo
 dist
-gulpfile.js
 spec/**/*.js
 
 # Created by https://www.gitignore.io/api/node

@@ -7,12 +7,14 @@ const input : ParsedFileEntry[] = [{
   'name': 'Document 1',
   'text': 'Elit Lorem nulla enim Lorem aliqua in sunt cillum sit ut culpa. Dolore ex culpa ad fugiat in fugiat nisi ea fugiat ut. Nulla labore officia esse enim commodo duis adipisicing.',
   'href': '/path/to/file.html',
-  'excerpt': 'Elit Lorem nulla enim Lorem aliqua in sunt cillum…'
+  'excerpt': 'Elit Lorem nulla enim Lorem aliqua in sunt cillum…',
+  'version': '1.0'
 }, {
   'name': 'Document 2',
   'text': 'Adipisicing excepteur quis aute est sit ad quis. Pariatur excepteur cillum minim incididunt. Ut non exercitation Lorem do tempor esse.',
   'href': '/path/to/file.html',
-  'excerpt': 'Adipisicing excepteur quis aute est sit…'
+  'excerpt': 'Adipisicing excepteur quis aute est sit…',
+  'version': '1.0'
 }]
 
 describe('Index builder', () => {

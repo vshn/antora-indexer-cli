@@ -233,8 +233,8 @@ export async function parsePlaybookFile(startPath: string): Promise<ParsedFileEn
 			// If any of the branches contains a "*" wildcard, get the actual list
 			// of branches to work with, as isomorphic-git cannot deal with a wildcard
 			// (this is actually used, for example in the k8up repository)
-			let branchesToIndex : string[] = []
-			let remoteBranches = await git.listBranches({ fs, dir: clonesPath, remote: 'origin' })
+			const branchesToIndex : string[] = []
+			const remoteBranches = await git.listBranches({ fs, dir: clonesPath, remote: 'origin' })
 			yamlBranches.forEach(branch => {
 				if (branch.includes('*')) {
 					remoteBranches.forEach(remoteBranch => {

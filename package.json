@@ -1,15 +1,15 @@
 {
   "name": "antora-indexer-cli",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "A tool to generate Lunr.js indexes out of an Antora project",
   "main": "index.js",
   "scripts": {
     "test": "npx ts-mocha spec/*",
-    "clean": "rimraf out dist",
-    "help": "ts-node src/antora-indexer.ts --help",
-    "release": "gulp",
-    "build": "tsc",
-    "lint": "eslint src"
+    "clean": "npx rimraf out dist",
+    "help": "npx ts-node src/antora-indexer.ts --help",
+    "release": "npx gulp",
+    "build": "npx tsc",
+    "lint": "npx eslint src"
   },
   "author": "VSHN AG",
   "license": "ISC",
