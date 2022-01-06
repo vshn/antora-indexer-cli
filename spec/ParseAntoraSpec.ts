@@ -1,16 +1,24 @@
-import { expect } from 'chai'
+import chai, { expect } from 'chai'
+import chaiAsPromised from 'chai-as-promised'
+chai.use(chaiAsPromised)
+
 import path from 'path'
 import { parseAntoraFile } from '../src/lib/parser'
 import { ParsedFileEntry } from '../src/lib/parsed_file_entry'
 
 describe('Parsing of versioned docs', () => {
+  it('throws if antora.yml not found', async () => {
+    const startPath = path.join(__dirname, 'antora', 'invalid')
+    expect(() => parseAntoraFile(startPath)).to.throw()
+  })
+
   it('should read the antora.yml file', () => {
     const startPath = path.join(__dirname, 'antora', 'versioned_docs')
     const results: ParsedFileEntry[] = parseAntoraFile(startPath)
     expect(results).not.to.be.null
   })
 
-  it('should return 3 items', () => {
+  it('should return 4 items', () => {
     const startPath = path.join(__dirname, 'antora', 'versioned_docs')
     const results: ParsedFileEntry[] = parseAntoraFile(startPath)
     expect(results.length).to.equal(4)
