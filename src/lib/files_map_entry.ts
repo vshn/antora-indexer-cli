@@ -8,4 +8,7 @@ export interface FilesMapEntry {
   version: string
 }
 
+/**
+ * Represents a map of filenames to FilesMapEntry objects.
+ */
 export type FileList = { [href: string]: FilesMapEntry }

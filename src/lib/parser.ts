@@ -91,7 +91,7 @@ function extractText(asciidoc: Asciidoctor.Document): string {
  * @param array Array of items being iterated upon
  * @param callback The function to call for each item
  */
-async function asyncForEach<T>(array: T[], callback: (arg0: T, arg1: number, arg2: T[]) => void) {
+async function asyncForEach<T>(array: T[], callback: (arg0: T, arg1: number, arg2: T[]) => Promise<void>) {
 	for (let index = 0; index < array.length; index++) {
 		await callback(array[index], index, array)
 	}
