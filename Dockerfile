@@ -1,5 +1,5 @@
 # Step 1: Builder image
-FROM node:16-alpine3.14 AS builder
+FROM docker.io/library/node:18.15.0-alpine3.16 AS builder
 
 RUN npm install -g pkg@4.5.1 pkg-fetch@2.6.9
 ENV NODE node14
@@ -9,8 +9,13 @@ RUN /usr/local/bin/pkg-fetch ${NODE} ${PLATFORM} ${ARCH}
 
 # Install app dependencies
 WORKDIR /command
-COPY ["package.json", "package-lock.json", "./"]
+COPY ["package.json", "package-lock.json", "tsconfig.json", "./"]
 RUN npm install
+
+# Run tests
+COPY spec /command/spec
+COPY src /command/src
+RUN npm test
 
 # Build executable with Gulp
 COPY ["tsconfig.json", "gulpfile.js", "./"]
@@ -22,7 +27,7 @@ RUN /usr/local/bin/pkg --targets ${NODE}-${PLATFORM}-${ARCH} dist/antora-indexer
 
 
 ## Step 2: Runtime image
-FROM alpine:3.14
+FROM docker.io/library/alpine:3.17
 RUN apk add --no-cache libstdc++
 COPY --from=builder /command/antora-indexer.bin /usr/local/bin/antora-indexer
 ENTRYPOINT [ "antora-indexer" ]

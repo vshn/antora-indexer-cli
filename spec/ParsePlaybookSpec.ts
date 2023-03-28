@@ -42,6 +42,6 @@ describe('Parsing of playbooks', () => {
     const result1 = results[3]
     expect(result1.href).to.equal('/local_playbook/another/1.2.3/index.html')
     const result2 = results[5]
-    expect(result2.href).to.equal('/idx/docker.html')
+    expect(result2.href).to.equal('/idx/container.html')
   })
 })
