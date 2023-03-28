@@ -1,28 +1,24 @@
-= Docker
+= Container
 
-Run the `docker build -t vshn/antora-indexer-cli .` command to build the image.
-
-== On the Command Line
-
-Once pushed, the following command will output the Lunr.js index for the Antora documentation located in the `~/project/docs` folder:
+The following command will output the Lunr.js index for the Antora documentation located in the `~/project/docs` folder:
 
 [source]
 --
-$ docker run --rm --interactive --tty --volume ~/project/docs:/docs vshn/antora-indexer-cli --antora /docs --write index
+$ podman run --rm --volume ~/project/docs:/docs ghcr.io/vshn/antora-indexer-cli --antora /docs --write index
 --
 
 The list of files (used to generate user-friendly search results) can be generated with the `--write files` option:
 
 [source]
 --
-$ docker run --rm --interactive --tty --volume ~/project/docs:/docs vshn/antora-indexer-cli --antora /docs --write files
+$ podman run --rm --volume ~/project/docs:/docs ghcr.io/vshn/antora-indexer-cli --antora /docs --write files
 --
 
 Users can learn more about this application using the command:
 
 [source]
 --
-$ docker run --rm --interactive --tty --volume ~/project/docs:/docs vshn/antora-indexer-cli --help
+$ podman run --rm ghcr.io/vshn/antora-indexer-cli --help
 --
 
 == Multi-Stage Builds
@@ -33,7 +29,7 @@ To use this image in https://docs.docker.com/develop/develop-images/multistage-b
 --
 # ---------- STEP 1 ----------
 # Index the project files
-FROM vshn/antora-indexer-cli as indexer
+FROM ghcr.io/vshn/antora-indexer-cli as indexer
 
 COPY . /
 RUN \
@@ -42,7 +38,7 @@ RUN \
     antora-indexer --playbook / --write index --output /index/lunr.json
 
 # ---------- STEP 3 ----------
-# Docker image only containing the search engine and the freshly built index
+# Container image only containing the search engine and the freshly built index
 FROM vshn/embedded-search-engine
 
 # Copy the index of the search engine
@@ -50,18 +46,18 @@ COPY --from=indexer /index/files.json /site/index/files.json
 COPY --from=indexer /index/lunr.json /site/index/lunr.json
 --
 
-Execute the corresponding `docker build` command from the root of the project that contains the `playbook.yml` file:
+Execute the corresponding `podman build` command from the root of the project that contains the `playbook.yml` file:
 
 [source]
 --
-$ docker build -t search .
+$ podman build -t search .
 --
 
 Test the image as follows:
 
 [source]
 --
-$ docker run --rm --detach --publish 3000:3000 search
+$ podman run --rm --detach --publish 3000:3000 search
 $ curl http://localhost:3000/search\?\q=diagram --silent | jq
 [
   {
