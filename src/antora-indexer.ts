@@ -73,7 +73,7 @@ async function main() {
 try {
   main()
 }
-catch (e) {
+catch (e: any) {
   console.error(`indexer.ts: Terminated with error: ${e}`)
   console.error(e.stack)
   process.exit(1)
