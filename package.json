@@ -27,7 +27,7 @@
     "@types/chai-as-promised": "^7.1.4",
     "@types/gulp": "4.0.18",
     "@types/js-yaml": "4.0.1",
-    "@types/jsdom": "16.2.15",
+    "@types/jsdom": "28.0.1",
     "@types/lunr": "2.3.7",
     "@types/mocha": "8.2.2",
     "@types/node": "14.17.3",
