@@ -89,6 +89,13 @@ describe('Support for components and modules', () => {
     expect(result.href).to.equal('/index.html')
   })
 
+  it('should keep the module name for non-ROOT modules of ROOT components', () => {
+    const startPath = path.join(__dirname, 'antora', 'root_component_docs')
+    const results: ParsedFileEntry[] = parseAntoraFile(startPath)
+    const result = results.find(r => r.name === 'Colophon')
+    expect(result?.href).to.equal('/other/colophon.html')
+  })
+
   it('should support ROOT modules', () => {
     const startPath = path.join(__dirname, 'antora', 'multi_module_docs')
     const results: ParsedFileEntry[] = parseAntoraFile(startPath)

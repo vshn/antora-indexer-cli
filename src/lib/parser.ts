@@ -50,7 +50,10 @@ function extractTitle(asciidoc: Asciidoctor.Document): string {
  */
 function buildHref(componentName: string, moduleName: string, version: string, filename: string): string {
 	if (componentName === 'ROOT') {
-		return path.join('/', version, filename.replace('adoc', 'html'))
+		if (moduleName === 'ROOT') {
+			return path.join('/', version, filename.replace('adoc', 'html'))
+		}
+		return path.join('/', moduleName, version, filename.replace('adoc', 'html'))
 	}
 	if (moduleName === 'ROOT') {
 		return path.join('/', componentName, version, filename.replace('adoc', 'html'))
