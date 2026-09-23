@@ -32,11 +32,11 @@ describe('Parsing of versioned docs', () => {
     expect(result.version).to.equal('0.0.1')
   })
 
-  it('should have an href with structure: /component/module/version/page.html', () => {
+  it('should have an href with structure: /component/version/module/page.html', () => {
     const startPath = path.join(__dirname, 'antora', 'versioned_docs')
     const results: ParsedFileEntry[] = parseAntoraFile(startPath)
     const result = results[3]
-    expect(result.href).to.equal('/versioned/another/0.0.1/index.html')
+    expect(result.href).to.equal('/versioned/0.0.1/another/index.html')
   })
 })
 
@@ -107,7 +107,7 @@ describe('Support for components and modules', () => {
     const startPath = path.join(__dirname, 'antora', 'multi_module_docs')
     const results: ParsedFileEntry[] = parseAntoraFile(startPath)
     const result = results[3]
-    expect(result.href).to.equal('/multi/another/2.5.7/index.html')
+    expect(result.href).to.equal('/multi/2.5.7/another/index.html')
   })
 })
 

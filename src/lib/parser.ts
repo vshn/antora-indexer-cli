@@ -42,23 +42,17 @@ function extractTitle(asciidoc: Asciidoctor.Document): string {
 }
 
 /**
- * Builds the URL to a particular HTML file, following Antora's standards.
+ * Builds the URL to a particular HTML file, following Antora's standards:
+ * /component/version/module/page.html
  * @param componentName The name of the Antora component (not used if "ROOT")
  * @param version The version of the Antora component
  * @param filename The filename of the AsciiDoc document
  * @param moduleName The module name (not used if "ROOT")
  */
 function buildHref(componentName: string, moduleName: string, version: string, filename: string): string {
-	if (componentName === 'ROOT') {
-		if (moduleName === 'ROOT') {
-			return path.join('/', version, filename.replace('adoc', 'html'))
-		}
-		return path.join('/', moduleName, version, filename.replace('adoc', 'html'))
-	}
-	if (moduleName === 'ROOT') {
-		return path.join('/', componentName, version, filename.replace('adoc', 'html'))
-	}
-	return path.join('/', componentName, moduleName, version, filename.replace('adoc', 'html'))
+	const component = componentName === 'ROOT' ? '' : componentName
+	const module = moduleName === 'ROOT' ? '' : moduleName
+	return path.join('/', component, version, module, filename.replace('adoc', 'html'))
 }
 
 /**

@@ -40,7 +40,7 @@ describe('Parsing of playbooks', () => {
     const startPath = path.join(__dirname, 'antora', 'playbook_docs')
     const results: ParsedFileEntry[] = await parsePlaybookFile(startPath)
     const result1 = results[3]
-    expect(result1.href).to.equal('/local_playbook/another/1.2.3/index.html')
+    expect(result1.href).to.equal('/local_playbook/1.2.3/another/index.html')
     const result2 = results[5]
     expect(result2.href).to.equal('/idx/container.html')
   })
